@@ -19,14 +19,17 @@ public class PlayerMover : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
+    private void FixedUpdate()
+    {
+        _isGrounded = _raycaster.CheckLocation();    
+    }
+
     private void Update()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         _rigidbody2D.velocity = new Vector2(horizontalInput * _speed, _rigidbody2D.velocity.y);
 
-        _isGrounded = _raycaster.CheckLocation();
-
-        _playerAnimation.Move(ref horizontalInput);
+        _playerAnimation.Move(horizontalInput);
 
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {

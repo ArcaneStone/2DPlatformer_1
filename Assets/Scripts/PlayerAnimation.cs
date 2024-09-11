@@ -4,7 +4,7 @@ public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
 
-    public void Move(ref float horizontalInput)
+    public void Move(float horizontalInput)
     {
         if (Mathf.Abs(horizontalInput) > 0.1f)
         {
