@@ -10,6 +10,7 @@ public class PlayerMover : MonoBehaviour
 
     [SerializeField] private Raycaster _raycaster;
     [SerializeField] private PlayerAnimation _playerAnimation;
+    [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
 
     private bool _isGrounded;
     private Rigidbody2D _rigidbody2D;
@@ -21,7 +22,7 @@ public class PlayerMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _isGrounded = _raycaster.CheckLocation();    
+        _isGrounded = _raycaster.IsGrounded();    
     }
 
     private void Update()
@@ -31,7 +32,7 @@ public class PlayerMover : MonoBehaviour
 
         _playerAnimation.Move(horizontalInput);
 
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+        if (Input.GetKeyDown(_jumpKey) && _isGrounded)
         {
             Jump();
         }

@@ -3,15 +3,14 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class Coin : MonoBehaviour
 {
-    [SerializeField] private CoinCounter _coinCounter;
-
-    private int _value = 1;
+    public delegate void OnCoinCollectedHandler(Coin coin);
+    public static event OnCoinCollectedHandler OnCoinCollected;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerMover>())
+        if (collision.gameObject.GetComponent<Wallet>() != null)
         {
-            _coinCounter.Collect(_value);
+            OnCoinCollected?.Invoke(this);
 
             Destroy(gameObject);
         }

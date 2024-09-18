@@ -21,14 +21,7 @@ public class EnemyMover : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, _waypoints[_currentWaypoint].position, _speed * Time.deltaTime);
 
-        if (_waypoints[_currentWaypoint].position.x > transform.position.x)
-        {
-            _isRight = true;
-        }
-        else
-        {
-            _isRight = false;
-        }
+        _isRight = _waypoints[_currentWaypoint].position.x > transform.position.x;
     }
 
     private void Turn()
