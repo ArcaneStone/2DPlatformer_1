@@ -6,6 +6,9 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private List<Transform> _waypoints;
 
+    private Quaternion _turnRight = Quaternion.Euler(0, 0, 0);
+    private Quaternion _turnLeft = Quaternion.Euler(0, 180, 0);
+
     private bool _isRight;
 
     private int _currentWaypoint = 0;
@@ -28,11 +31,11 @@ public class EnemyMover : MonoBehaviour
     {
         if (_isRight)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = _turnRight;
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            transform.rotation = _turnLeft;
         }
     }
 }

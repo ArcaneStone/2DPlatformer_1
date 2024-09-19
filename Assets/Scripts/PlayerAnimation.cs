@@ -4,9 +4,9 @@ public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
 
-    private const string Run = nameof(Run);
+    private static readonly int RunHash = Animator.StringToHash("Run");
 
-    private void Start()
+    private void Awake()
     {
         _animator = GetComponent<Animator>();
     }
@@ -15,11 +15,11 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (Mathf.Abs(horizontalInput) > 0.1f)
         {
-            _animator.SetBool(Run, true);
+            _animator.SetBool(RunHash, true);
         }
         else
         {
-            _animator.SetBool(Run, false);
+            _animator.SetBool(RunHash, false);
         }
     }
 }

@@ -8,10 +8,11 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _jumpForce = 8f;
     [SerializeField] private float _groundCheckDistance = 0.1f;
 
-    [SerializeField] private Raycaster _raycaster;
+    [SerializeField] private GroundDetector _groundDetector;
     [SerializeField] private PlayerAnimation _playerAnimation;
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
 
+    private string _horizontalName = "Horizontal";
     private bool _isGrounded;
     private Rigidbody2D _rigidbody2D;
 
@@ -22,12 +23,12 @@ public class PlayerMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _isGrounded = _raycaster.IsGrounded();    
+        _isGrounded = _groundDetector.IsGrounded();    
     }
 
     private void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontalInput = Input.GetAxis(_horizontalName);
         _rigidbody2D.velocity = new Vector2(horizontalInput * _speed, _rigidbody2D.velocity.y);
 
         _playerAnimation.Move(horizontalInput);
