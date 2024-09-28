@@ -2,18 +2,22 @@ using UnityEngine;
 
 public class Wallet : MonoBehaviour
 {
-    [SerializeField] private TextMesh _scoreText;
-
+    [SerializeField] private ScoreDisplay _scoreDisplay;
     private int _score = 0;
 
-    private void Start()
+    private void OnEnable()
     {
         GetComponent<CollisionHandler>().OnCoinCollected += CollectCoin;
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<CollisionHandler>().OnCoinCollected -= CollectCoin;
     }
 
     private void CollectCoin(Coin coin)
     {
         _score += coin.Value;
-        _scoreText.text = _score.ToString();
+        _scoreDisplay.UpdateScore(_score);
     }
 }

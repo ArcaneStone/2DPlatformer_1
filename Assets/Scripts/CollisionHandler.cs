@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
-    public System.Action<Coin> OnCoinCollected;
+    public event System.Action<Coin> OnCoinCollected;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

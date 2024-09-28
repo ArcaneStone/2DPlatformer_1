@@ -4,9 +4,4 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
     public int Value { get; private set; } = 1;
-
-    private void Start()
-    {
-        GetComponent<CollisionHandler>().OnCoinCollected += (coin) => {};
-    }
 }

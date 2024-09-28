@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
-
     private static readonly int RunHash = Animator.StringToHash("Run");
+
+    [SerializeField] private Animator _animator;
 
     private void Awake()
     {
