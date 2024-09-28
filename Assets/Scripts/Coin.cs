@@ -3,17 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class Coin : MonoBehaviour
 {
-    public System.Action<Coin> Collected;
+    public int Value { get; private set; } = 1;
 
-    public int Value { get; private set; } = 1; 
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Start()
     {
-        if (collision.GetComponent<Wallet>() != null)
-        {
-            Collected?.Invoke(this);
-
-            Destroy(gameObject);
-        }
+        GetComponent<CollisionHandler>().OnCoinCollected += (coin) => {};
     }
 }

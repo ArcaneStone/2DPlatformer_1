@@ -1,20 +1,19 @@
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _jumpForce = 8f;
-    [SerializeField] private float _groundCheckDistance = 0.1f;
 
     [SerializeField] private GroundDetector _groundDetector;
     [SerializeField] private PlayerAnimation _playerAnimation;
-    [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
+    [SerializeField] private InputManager _inputManager;
 
-    private string _horizontalName = "Horizontal";
-    private bool _isGrounded;
     private Rigidbody2D _rigidbody2D;
+
+    private bool _isGrounded = false;
+    private bool _isJump = false;
 
     private void Awake()
     {
@@ -23,19 +22,25 @@ public class PlayerMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _isGrounded = _groundDetector.IsGrounded();    
+        _rigidbody2D.velocity = new Vector2(_inputManager.HorizontalAxis * _speed, _rigidbody2D.velocity.y);
+        _isGrounded = _groundDetector.IsGrounded();
+
+        if (_isJump)
+        {
+            Jump();
+
+            _isJump = false;
+            _isGrounded = false;
+        }
     }
 
     private void Update()
     {
-        float horizontalInput = Input.GetAxis(_horizontalName);
-        _rigidbody2D.velocity = new Vector2(horizontalInput * _speed, _rigidbody2D.velocity.y);
+        _playerAnimation.Move(_inputManager.HorizontalAxis);
 
-        _playerAnimation.Move(horizontalInput);
-
-        if (Input.GetKeyDown(_jumpKey) && _isGrounded)
+        if (_inputManager.JumpPressed && _isGrounded)
         {
-            Jump();
+            _isJump = true;
         }
     }
 
