@@ -38,7 +38,7 @@ public class PlayerMover : MonoBehaviour
     {
         _playerAnimation.Move(_inputManager.HorizontalAxis);
 
-        if (_inputManager.JumpPressed && _isGrounded)
+        if (_inputManager.IsJumpPressed && _isGrounded)
         {
             _isJump = true;
         }
