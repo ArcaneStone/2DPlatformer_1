@@ -2,29 +2,25 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public float CurrentHealth;
+    [SerializeField] protected float _maxHealth;
 
-    public float MaxHealth { get; protected set; }
-    public bool IsDead { get; protected set; } = false;
+    public bool IsDead { get; private set; } = false;
+    public float CurrentHealth { get; protected set; }
+    public float MaxHealth { get; private set; }
 
-    private void Start()
+    protected virtual void Awake()
     {
+        MaxHealth = _maxHealth;
         CurrentHealth = MaxHealth;
     }
 
     public void TakeDamage(float damageAmount)
     {
         CurrentHealth -= damageAmount;
-
-        if (CurrentHealth <= 0)
-        {
-            CurrentHealth = 0;
-            IsDead = true;
-        }
     }
 
-    public void SetMaxHealth(float newMaxHealth)
+    protected virtual void Die()
     {
-        MaxHealth = newMaxHealth;
+        IsDead = true;       
     }
 }

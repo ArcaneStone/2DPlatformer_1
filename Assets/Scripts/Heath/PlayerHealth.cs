@@ -2,29 +2,25 @@ using UnityEngine;
 
 public class PlayerHealth : Health
 {
-    public PlayerHealth(float maxHealth)
-    {
-        MaxHealth = maxHealth;
-    }
+    [SerializeField] private CollisionHandler _collisionHandler;
 
-    private void Start()
+    private void Awake()
     {
-        CurrentHealth = MaxHealth;
+        _collisionHandler = GetComponent<CollisionHandler>();
     }
 
     private void OnEnable()
     {
-        GetComponent<CollisionHandler>().OnHealthKitCollected += Heal;
+        _collisionHandler.OnHealthKitCollected += Heal;
     }
 
     private void OnDisable()
     {
-        GetComponent<CollisionHandler>().OnHealthKitCollected -= Heal;
+        _collisionHandler.OnHealthKitCollected -= Heal;
     }
 
     private void Heal(HealthKit healthKit)
     {
         CurrentHealth += healthKit.HealAmount;
-        Debug.Log("Восстановлено здоровья: " + healthKit.HealAmount);
     }
 }

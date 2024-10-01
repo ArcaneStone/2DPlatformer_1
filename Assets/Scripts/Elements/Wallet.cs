@@ -3,16 +3,23 @@ using UnityEngine;
 public class Wallet : MonoBehaviour
 {
     [SerializeField] private ScoreDisplay _scoreDisplay;
+
     private int _score = 0;
+    private CollisionHandler _collisionHandler;
+
+    private void Awake()
+    {
+        _collisionHandler = GetComponent<CollisionHandler>();
+    }
 
     private void OnEnable()
     {
-        GetComponent<CollisionHandler>().OnCoinCollected += CollectCoin;
+        _collisionHandler.OnCoinCollected += CollectCoin;
     }
 
     private void OnDisable()
     {
-        GetComponent<CollisionHandler>().OnCoinCollected -= CollectCoin;
+        _collisionHandler.OnCoinCollected -= CollectCoin;
     }
 
     private void CollectCoin(Coin coin)
