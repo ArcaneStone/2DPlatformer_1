@@ -4,7 +4,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] protected float _maxHealth;
 
-    public bool IsDead { get; private set; } = false;
+    public bool IsDead { get; protected set; } = false;
     public float CurrentHealth { get; protected set; }
     public float MaxHealth { get; private set; }
 
@@ -16,7 +16,12 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
-        CurrentHealth -= damageAmount;
+        CurrentHealth = Mathf.Clamp(CurrentHealth - damageAmount, 0, MaxHealth);
+
+        if (CurrentHealth <= 0 && !IsDead)
+        {
+            Die();
+        }
     }
 
     protected virtual void Die()

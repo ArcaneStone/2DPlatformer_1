@@ -4,7 +4,7 @@ public class PlayerHealth : Health
 {
     [SerializeField] private CollisionHandler _collisionHandler;
 
-    private void Awake()
+    protected override void Awake()
     {
         _collisionHandler = GetComponent<CollisionHandler>();
     }
