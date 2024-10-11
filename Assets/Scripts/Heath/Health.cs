@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] protected float _maxHealth;
-
+    [SerializeField] protected float MaxHealth;
     public bool IsDead { get; protected set; } = false;
     public float CurrentHealth { get; protected set; }
-    public float MaxHealth { get; private set; }
 
     protected virtual void Awake()
     {
-        MaxHealth = _maxHealth;
         CurrentHealth = MaxHealth;
     }
 
@@ -26,6 +23,6 @@ public class Health : MonoBehaviour
 
     protected virtual void Die()
     {
-        IsDead = true;       
+        IsDead = true;
     }
 }

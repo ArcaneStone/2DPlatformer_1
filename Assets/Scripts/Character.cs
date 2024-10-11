@@ -1,25 +1,27 @@
 using UnityEngine;
 
+[RequireComponent (typeof(Health))]
+[RequireComponent(typeof(Attack))]
 public abstract class Character : MonoBehaviour
 {
-    [SerializeField] protected float _damage;
+    [SerializeField] protected float Damage;
 
-    protected Health _health;
-    protected Attack _attack;
+    protected internal Health Health;
+    protected Attack Attack;
 
     private void Awake()
     {
-        _health = GetComponent<Health>();
-        _attack = GetComponent<Attack>();
+        Health = GetComponent<Health>();
+        Attack = GetComponent<Attack>();
 
-        _attack.SetDamage(_damage);
+        Attack.SetDamage(Damage);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Character>(out Character targetCharacter) && targetCharacter != this)
         {
-            _attack.AttackTarget(targetCharacter.GetComponent<Health>());
+            Attack.AttackTarget(targetCharacter.Health);
         }
     }
 }

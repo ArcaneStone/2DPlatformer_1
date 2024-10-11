@@ -2,13 +2,23 @@ using UnityEngine;
 
 public class Player : Character
 {
-    [SerializeField]private PlayerAttack _playerAttack;
+    public event System.Action<int> OnCoinCollected;
+
+    [SerializeField] private PlayerAttack _attack;
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Character>(out Character targetCharacter) && targetCharacter != this && _playerAttack.IsPlayerPunch())
+        if (collision.TryGetComponent<Character>(out Character targetCharacter) && targetCharacter != this)
         {
-            _attack.AttackTarget(targetCharacter.GetComponent<Health>());
+            AttackCharacter(targetCharacter);
+        }
+    }
+
+    private void AttackCharacter(Character targetCharacter)
+    {
+        if (_attack.IsPlayerPunch())
+        {
+            _attack.AttackTarget(targetCharacter.Health);
         }
     }
 }
