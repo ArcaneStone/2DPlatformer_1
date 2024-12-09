@@ -3,11 +3,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMover : MonoBehaviour
 {
+    public float HorizontalMovement { get; private set; }
+
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _jumpForce = 8f;
 
     [SerializeField] private GroundDetector _groundDetector;
-    [SerializeField] private PlayerAnimation _playerAnimation;
     [SerializeField] private InputManager _inputManager;
 
     private Rigidbody2D _rigidbody2D;
@@ -22,7 +23,9 @@ public class PlayerMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigidbody2D.velocity = new Vector2(_inputManager.HorizontalAxis * _speed, _rigidbody2D.velocity.y);
+        HorizontalMovement = _inputManager.HorizontalAxis;
+
+        _rigidbody2D.velocity = new Vector2(HorizontalMovement * _speed, _rigidbody2D.velocity.y);
         _isGrounded = _groundDetector.IsGrounded();
 
         if (_isJump)
@@ -36,8 +39,6 @@ public class PlayerMover : MonoBehaviour
 
     private void Update()
     {
-        _playerAnimation.Move(_inputManager.HorizontalAxis);
-
         if (_inputManager.IsJumpPressed && _isGrounded)
         {
             _isJump = true;

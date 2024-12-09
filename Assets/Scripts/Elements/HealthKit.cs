@@ -4,4 +4,10 @@ using UnityEngine;
 public class HealthKit : Item
 {
     public float HealAmount { get; private set; } = 20;
+
+    public override void Collect()
+    {
+        PlayerHealth.Instance.Heal(HealAmount);
+        Destroy(gameObject);
+    }
 }

@@ -18,7 +18,7 @@ public class Player : Character
     {
         if (_attack.IsPlayerPunch())
         {
-            _attack.AttackTarget(targetCharacter.Health);
+            _attack.AttackTarget(targetCharacter.GetHealth());
         }
     }
 }

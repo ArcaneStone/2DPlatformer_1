@@ -6,6 +6,8 @@ public class Health : MonoBehaviour
     public bool IsDead { get; protected set; } = false;
     public float CurrentHealth { get; protected set; }
 
+    public event System.Action OnDeath;
+
     protected virtual void Awake()
     {
         CurrentHealth = MaxHealth;
@@ -24,5 +26,6 @@ public class Health : MonoBehaviour
     protected virtual void Die()
     {
         IsDead = true;
+        OnDeath?.Invoke();
     }
 }

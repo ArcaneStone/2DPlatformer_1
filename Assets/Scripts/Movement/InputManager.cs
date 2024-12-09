@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
     public float HorizontalAxis { get; private set; }
     public bool IsJumpPressed { get; private set; }
     public bool IsAttackPressed { get; private set; }
-
+    
     private void Update()
     {
         HorizontalAxis = Input.GetAxis(_horizontalName);

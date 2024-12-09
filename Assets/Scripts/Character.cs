@@ -6,7 +6,7 @@ public abstract class Character : MonoBehaviour
 {
     [SerializeField] protected float Damage;
 
-    protected internal Health Health;
+    protected Health Health;
     protected Attack Attack;
 
     private void Awake()
@@ -23,5 +23,10 @@ public abstract class Character : MonoBehaviour
         {
             Attack.AttackTarget(targetCharacter.Health);
         }
+    }
+
+    public Health GetHealth()
+    {
+        return Health;
     }
 }
