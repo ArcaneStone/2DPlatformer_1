@@ -17,9 +17,4 @@ public class PlayerHealth : Health
             Instance = this;
         }
     }
-
-    public void Heal(float healAmount)
-    {
-        CurrentHealth = Mathf.Clamp(CurrentHealth + healAmount, 0, MaxHealth);
-    }
 }

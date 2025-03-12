@@ -3,19 +3,34 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] protected float MaxHealth;
+
+    public event System.Action OnDeath;
+    public event System.Action<float> OnHealthChanged;
+
     public bool IsDead { get; protected set; } = false;
     public float CurrentHealth { get; protected set; }
 
-    public event System.Action OnDeath;
+    public float MaxHealthValue => MaxHealth;
 
     protected virtual void Awake()
     {
         CurrentHealth = MaxHealth;
     }
 
-    public void TakeDamage(float damageAmount)
+    private void ChangeHealth(float amount)
     {
-        CurrentHealth = Mathf.Clamp(CurrentHealth - damageAmount, 0, MaxHealth);
+        if (amount == 0)
+        {
+            return;
+        }
+
+        float oldHealth = CurrentHealth;
+        CurrentHealth = Mathf.Clamp(CurrentHealth + amount, 0, MaxHealth);
+
+        if (CurrentHealth != oldHealth)
+        {
+            OnHealthChanged?.Invoke(CurrentHealth);
+        }
 
         if (CurrentHealth <= 0 && !IsDead)
         {
@@ -23,9 +38,31 @@ public class Health : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float damageAmount)
+    {
+        if (damageAmount < 0)
+        {
+            return;
+        }
+
+        ChangeHealth(-damageAmount);
+    }
+
+    public void Heal(float healAmount)
+    {
+        if (healAmount < 0)
+        {
+            return;
+        }
+
+        ChangeHealth(healAmount);
+    }
+
+
     protected virtual void Die()
     {
         IsDead = true;
+        OnHealthChanged?.Invoke(CurrentHealth);
         OnDeath?.Invoke();
     }
 }
